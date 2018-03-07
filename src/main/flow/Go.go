@@ -1,4 +1,4 @@
-package main
+package flow
 
 import (
 	"fmt"
@@ -20,6 +20,7 @@ func main() {
 		<-ch1
 		fmt.Println("2")
 		ch2 <- 2
+		fmt.Printf("通道2输出结果%v", <-ch2)
 	}()
 	go func() {
 		<-ch2
@@ -27,6 +28,7 @@ func main() {
 		ch3 <- 3
 	}()
 	<-ch3
+
 }
 
 /*

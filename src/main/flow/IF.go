@@ -1,4 +1,4 @@
-package main
+package flow
 
 func main() {
 	var number int = 5
