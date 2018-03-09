@@ -8,10 +8,11 @@ import (
 )
 
 func main() {
-	p := createPipeline("small.in", 512, 4)
+	p := createPipeline("small.in",
+		512,
+		4)
 	writeToFile(p, "small.out")
-	printFile("small.out")
-
+	//printFile("small.out")
 }
 
 func printFile(filename string) {
@@ -23,6 +24,7 @@ func printFile(filename string) {
 	defer file.Close()
 
 	p := node.ReaderSource(file, -1)
+
 	for v := range p {
 		fmt.Println(v)
 	}
@@ -45,6 +47,9 @@ func createPipeline(filename string,
 	fileSize, chunkCount int) <-chan int {
 
 	chunkSize := fileSize / chunkCount
+
+	node.Init()
+
 	var sortResults []<-chan int
 
 	for i := 0; i < chunkCount; i++ {
@@ -58,7 +63,6 @@ func createPipeline(filename string,
 		source := node.ReaderSource(
 			bufio.NewReader(file),
 			chunkSize)
-		node.InMemSort(source)
 
 		sortResults = append(
 			sortResults,

@@ -5,7 +5,15 @@ import (
 	"io"
 	"encoding/binary"
 	"math/rand"
+	"time"
+	"fmt"
 )
+
+var startTime time.Time
+
+func Init() {
+	startTime = time.Now()
+}
 
 // <-chan 只能输出的管道【调用该方法的人只能收取数据】
 func ArraySource(a ...int) <-chan int {
@@ -21,17 +29,17 @@ func ArraySource(a ...int) <-chan int {
 
 //排序
 func InMemSort(in <-chan int) <-chan int {
-	out := make(chan int)
+	out := make(chan int, 1024)
 	go func() {
 		//读取到内存中
 		var a []int
 		for v := range in {
 			a = append(a, v)
 		}
-
+		fmt.Println("Read done:", time.Now().Sub(startTime))
 		//排序
 		sort.Ints(a)
-
+		fmt.Println("InMemSort done:", time.Now().Sub(startTime))
 		//输出
 		for _, v := range a {
 			out <- v
@@ -44,7 +52,7 @@ func InMemSort(in <-chan int) <-chan int {
 
 //合并两个节点的数据【归并】
 func Merge(in1, in2 <-chan int) <-chan int {
-	out := make(chan int)
+	out := make(chan int, 1024)
 	go func() {
 		v1, ok1 := <-in1
 		v2, ok2 := <-in2
@@ -59,10 +67,12 @@ func Merge(in1, in2 <-chan int) <-chan int {
 			}
 		}
 		close(out)
+		fmt.Println("Merge done:", time.Now().Sub(startTime))
 	}()
 	return out
 }
 
+//搭建归并节点组
 func MergeN(inputs ...<-chan int) <-chan int {
 
 	if len(inputs) == 1 {
@@ -76,17 +86,15 @@ func MergeN(inputs ...<-chan int) <-chan int {
 		MergeN(inputs[m:]...))
 }
 
-//从文件读取数据
+//从文件读取数据，支持分块
 func ReaderSource(reader io.Reader, chunkSize int) <-chan int {
-	out := make(chan int)
+	out := make(chan int, 1024) //优化
 	go func() {
 		buffer := make([]byte, 8)
-
 		bytesRead := 0
 
 		for {
 			n, err := reader.Read(buffer)
-
 			bytesRead += n
 
 			if n > 0 {
