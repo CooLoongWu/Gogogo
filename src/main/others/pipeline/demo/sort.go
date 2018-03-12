@@ -2,7 +2,7 @@ package main
 
 import (
 	"os"
-	"main/pipeline/node"
+	"main/others/pipeline/node"
 	"bufio"
 	"fmt"
 	"strconv"
