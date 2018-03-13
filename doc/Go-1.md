@@ -9,8 +9,12 @@
 ## 2、GOROOT，GOPATH
   我开发工具使用的是GoLand，开发前还需要进行下简单配置，打开GoLand在File->Settings->Go中可以看到我们需要进行GOROOT和GOPATH的配置：  
   
-  GOROOT：就是go的安装路径了，C:\Go，如下图：
+  ### GOROOT
+  就是go的安装路径了，C:\Go，如下图：
   ![image](img/1_goroot.png)  
   
-  GOPATH：这个暂时我们设置为我们go工程的目录，比如我们的go工程为D:\Works_Go\Gogogo，那么如下图：
-  ![image](img/1_gopath.png)  
+  ### GOPATH  
+  这个暂时我们设置为我们go工程的目录，比如我们的go工程为D:\Works_Go\Gogogo，那么如下图：
+  ![image](img/1_gopath.png)   
+  在这个工程目录中我们一般需要建立一个src文件夹来存放我们的代码源文件，而bin和pkg文件夹则会在我们进行build和install命令时自动在工程目录中创建的。
+  bin文件夹一般会存放 .exe 文件，pkg文件夹一般会存放 .a 文件。  
