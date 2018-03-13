@@ -1,4 +1,4 @@
-package main
+package demo
 
 import (
 	"main/others/pipeline/node"
