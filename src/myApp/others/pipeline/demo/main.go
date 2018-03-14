@@ -1,7 +1,7 @@
 package demo
 
 import (
-	"main/others/pipeline/node"
+	"myApp/others/pipeline/node"
 	"fmt"
 	"os"
 	"bufio"

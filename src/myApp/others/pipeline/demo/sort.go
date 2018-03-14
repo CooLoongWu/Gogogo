@@ -2,7 +2,7 @@ package demo
 
 import (
 	"os"
-	"main/others/pipeline/node"
+	"myApp/others/pipeline/node"
 	"bufio"
 	"fmt"
 	"strconv"
