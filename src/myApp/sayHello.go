@@ -1,6 +1,6 @@
 package main
 
-import "main/utils"
+import "myApp/utils"
 
 func main() {
 	utils.SayHello()
