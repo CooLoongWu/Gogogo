@@ -5,12 +5,19 @@ import (
 	"fmt"
 )
 
-func main() {
-	s := "hi"
-	p := &s
-	ss := *p
+func multi(str string) (string, bool) {
+	if len(str) == 0 {
+		return str, false
+	}
+	return str, true
+}
 
-	fmt.Println("变量s在内存中的地址：", p, "；该内存地址上存放的是：", ss)
-	fmt.Println("表达式s == *(&s)是否成立：", s == *(&s))
+func main() {
+HERE:
+	fmt.Println("我在29行")
+
+	fmt.Println("我在32行")
+	goto HERE
+
 	utils.SayHello()
 }
