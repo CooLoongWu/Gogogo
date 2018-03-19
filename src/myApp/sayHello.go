@@ -13,11 +13,7 @@ func multi(str string) (string, bool) {
 }
 
 func main() {
-HERE:
-	fmt.Println("我在29行")
 
-	fmt.Println("我在32行")
-	goto HERE
 
 	utils.SayHello()
 }
