@@ -1,19 +1,16 @@
 package main
 
 import (
-	"myApp/utils"
 	"fmt"
 )
 
-func multi(str string) (string, bool) {
-	if len(str) == 0 {
-		return str, false
-	}
-	return str, true
+func main() {
+	a := add()
+	fmt.Println(a(1))
 }
 
-func main() {
-
-
-	utils.SayHello()
+func add() func(b int) int {
+	return func(b int) int {
+		return b + 2
+	}
 }
