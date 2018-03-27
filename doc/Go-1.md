@@ -1,13 +1,14 @@
 # Go基础
 
-## 1、安装【基于Windows】
+## Windows 10
+### 1、安装
   建议下载.msi文件，安装时默认安装在C:\Go\文件夹下（go1.10版本）。
   安装完毕后会自动在系统环境变量的Path中写入C:\Go\bin，并帮我们建立了一个GOROOT的变量，值为C:\Go\。
   
   然后我们打开黑窗口（cmd，命令行）输入：```go version```，出现相应的go的版本则说明安装配置成功。
   ![image](img/1_version.png)  
   
-## 2、路径
+### 2、路径
   我开发工具使用的是GoLand，开发前还需要进行下简单配置，打开GoLand在File->Settings->Go中可以看到我们需要进行GOROOT和GOPATH的配置：  
   
 #### GOROOT
@@ -31,7 +32,7 @@
   go install命令执行后编译结果存放的路径，见GOPATH中的bin目录。
   
   
-## 3、命令
+### 3、命令
 这里以我的工程讲解命令，代码文件很简单，工程结构如下图所示：  
 ![image](img/1_project.png)  
 bin、pkg目录已经说过了，里面没有内容。doc是我写文档的文件夹。src是源代码文件夹（src下的others文件夹我们不去管它，那是我练习时写的代码，跟教程无关）。  
@@ -64,7 +65,7 @@ func main() {
 
 ```
 
-### go run
+#### go run
   **运行命令源码文件**  
   Go源码文件包括：命令源码文件、库源码文件和测试源码文件。命令源码文件属于main包且文件中有main()函数。  
   命令后跟完整文件名，在编辑器底部打开Terminal进入控制台并输入如下命令  
@@ -72,7 +73,7 @@ func main() {
   ![image](img/1_gorun.png)  
   因为我们在项目的根目录下，所以当编译的sayHello.go文件的时候需要写出他的路径。  
   
-### go build
+#### go build
   **编译并安装自身包和依赖包**  
   
   命令后跟完整文件名，在编辑器底部打开Terminal进入控制台并输入如下命令  
@@ -82,7 +83,7 @@ func main() {
   ```go build myApp```，编译完毕后在项目的根目录会出现myApp.exe文件。  
   
   
-### go install
+#### go install
   **安装自身包和依赖包**  
   命令后跟目录名，例如在控制台输入  
   ```go install myApp```，编译完毕后会在项目的bin文件夹下生成一个main.exe文件。  
@@ -98,3 +99,44 @@ func main() {
   
   **区别在哪里呢？** myApp下包含一个有main包以及main函数的sayHello.go主文件。而utils文件夹下只是库文件。  
   
+  
+## Ubuntu 14.04
+### 1、安装  
+不建议使用apt-get的方式安装，因为自动安装的go环境比较旧。我们选择手动安装：  
+```go
+//1、下载最新的go安装包
+wget https://dl.google.com/go/go1.10.linux-amd64.tar.gz
+
+//2、将下载的安装包解压到/use/local文件夹中去
+tar -xzf go1.10.linux-amd64.tar.gz  -C /usr/local
+
+//3、添加环境变量
+//3.1、打开用户配置文件
+vim ~/.profile
+
+//3.2、向文件末尾添加如下代码，并保存退出
+export GOROOT="/usr/local/go"   //设置为你自己的go解压目录
+export GOPATH="/home/Gogogo"    //设置为你自己的go项目目录
+
+//3.3、使配置生效
+source ~/.profile
+
+//3.4、查看环境配置是否正确，在任意目录下使用如下命令，如果打印出正确版本信息则表示环境配置成功 
+go version
+
+```
+### 2、运行
+在项目目录（/home/Gogogo）下新建go代码文件hello.go，代码如下：
+```go
+package main
+import "fmt"
+func main() {
+    fmt.Println("Hello Go！")
+}
+```
+然后在项目目录（/home/Gogogo）下运行命令：
+```go
+go run hello.go
+```  
+
+如果控制台打印出“Hello Go！”则表示运行成功。
