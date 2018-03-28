@@ -117,6 +117,7 @@ vim ~/.profile
 //3.2、向文件末尾添加如下代码，并保存退出
 export GOROOT="/usr/local/go"   //设置为你自己的go解压目录
 export GOPATH="/home/Gogogo"    //设置为你自己的go项目目录
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin //为了确保相关文件在文件系统任何地方都能被调用
 
 //3.3、使配置生效
 source ~/.profile
