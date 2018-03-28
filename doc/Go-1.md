@@ -103,7 +103,7 @@ func main() {
 ## Ubuntu 14.04
 ### 1、安装  
 不建议使用apt-get的方式安装，因为自动安装的go环境比较旧。我们选择手动安装：  
-```go
+```
 //1、下载最新的go安装包
 wget https://dl.google.com/go/go1.10.linux-amd64.tar.gz
 
@@ -115,9 +115,10 @@ tar -xzf go1.10.linux-amd64.tar.gz  -C /usr/local
 vim ~/.profile
 
 //3.2、向文件末尾添加如下代码，并保存退出
-export GOROOT="/usr/local/go"   //设置为你自己的go解压目录
-export GOPATH="/home/Gogogo"    //设置为你自己的go项目目录
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin //为了确保相关文件在文件系统任何地方都能被调用
+export GOROOT="/usr/local/go"   #设置为你自己的go解压目录
+export GOPATH="/home/Gogogo"    #设置为你自己的go项目目录
+export GOBIN="/home/Gogogo/bin"    #设置为你自己的go项目下的bin目录
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin #为了确保相关文件在文件系统任何地方都能被调用
 
 //3.3、使配置生效
 source ~/.profile
@@ -140,4 +141,7 @@ func main() {
 go run hello.go
 ```  
 
-如果控制台打印出“Hello Go！”则表示运行成功。
+如果控制台打印出“Hello Go！”则表示运行成功。  
+
+### 3、命令  
+基本命令同上。
