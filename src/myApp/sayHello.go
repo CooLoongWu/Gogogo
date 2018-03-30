@@ -4,23 +4,19 @@ import (
 	"fmt"
 )
 
+//或者简单的结构体如下
+type T struct {
+	a, b, _ int
+	//“_”表示这个字段不会被用到
+}
+
 func main() {
+	//t := &T{1, 2, 4}
 
-	ite := map[int]string{1: "hello", 2: "hi"}
-	fmt.Printf("Version A: Value of items: %v\n", ite)
-	// Version A:
-	items := make([]map[int]int, 5)
-	for i := range items {
-		items[i] = make(map[int]int, 1)
-		items[i][1] = i
-	}
-	fmt.Printf("数据展示: %v\n", items)
-	// Version B: NOT GOOD!
-	items2 := make([]map[int]int, 5)
-	for _, item := range items2 {
-		item = make(map[int]int, 1) // item is only a copy of the slice element.
-		item[1] = 2                 // This 'item' will be lost on the next iteration.
-	}
-	fmt.Printf("数据展示: %v\n", items2)
+	//var _ T
+	//t := T{1, 2, 4}
 
+	//第三种
+	t := T{a: 1}
+	fmt.Println(t)
 }
