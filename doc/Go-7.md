@@ -29,6 +29,7 @@ var t *T = new(T)
 
 t := new(T)
 //上面两条语句相同，变量t是一个指向T的指针
+//！！如果T是一个结构体类型，那么表达式 new(T)和&T{}是等价的。
 
 
 var t T
@@ -60,6 +61,36 @@ func main() {
 	//第三种，只给指定字段赋值，其他字段为零值
 	//t := T{a:1}
 	fmt.Println(t)
+}
+
+```
+### 工厂方法构建结构体实例
+在 Go 语言中常常像下面这样在工厂方法里使用初始化来简便的实现构造子工厂。  
+如果T是一个结构体类型，那么表达式 new(T)和&T{}是等价的。
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+//或者简单的结构体如下
+type T struct {
+	a, b, _ int
+	//“_”表示这个字段不会被用到
+}
+
+func main() {
+	t := newT(1, 2, 3)
+	fmt.Println(t)
+}
+
+func newT(a int, b int, c int) *T {
+	if a < 0 {
+		return nil
+	}
+	return &T{a, b, c}
 }
 
 ```

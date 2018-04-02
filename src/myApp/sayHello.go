@@ -11,12 +11,13 @@ type T struct {
 }
 
 func main() {
-	//t := &T{1, 2, 4}
-
-	//var _ T
-	//t := T{1, 2, 4}
-
-	//第三种
-	t := T{a: 1}
+	t := newT(1, 2, 3)
 	fmt.Println(t)
+}
+
+func newT(a int, b int, c int) *T {
+	if a < 0 {
+		return nil
+	}
+	return &T{a, b, c}
 }
