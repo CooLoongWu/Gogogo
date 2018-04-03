@@ -95,3 +95,83 @@ func newT(a int, b int, c int) *T {
 
 ```
 
+### 匿名字段和内嵌结构体
+结构体可以包含一个或多个 匿名（或内嵌）字段，即这些字段没有显式的名字，只有字段的类型是必须
+的，此时类型也就是字段的名字。匿名字段本身可以是一个结构体类型，即 结构体可以包含内嵌结构体。
+
+请看下面代码示例：  
+```go
+package main
+
+import (
+	"fmt"
+)
+
+type inner struct {
+	a int
+	b int
+}
+
+type outer struct {
+	c int
+	string
+	inner //上面的结构体，在这里也就是内嵌结构体
+}
+
+func main() {
+	outerS1 := new(outer)
+	outerS1.a = 1
+	outerS1.b = 2
+	outerS1.c = 3
+	outerS1.string = "hello"
+	fmt.Println("第一种方式输出：", outerS1)
+
+	outerS2 := outer{3, "hello", inner{1, 2}}
+	fmt.Println("第二种方式输出：", outerS2)
+}
+
+//最后结果打印：
+//第一种方式输出： &{3 hello {1 2}}
+//第二种方式输出： {3 hello {1 2}}
+```
+
+### 内嵌结构体字段冲突
+
+结构体A和B中都有变量a，C、D都内嵌A、B，例如下面的代码：  
+```go
+package main
+
+type A struct {
+	a int
+	b int
+}
+
+type B struct {
+	a int
+}
+
+type C struct {
+	A
+	B
+}
+
+type D struct {
+	a int
+	A
+	B
+}
+
+func main() {
+	c := new(C)
+	//c.a = 1  //错误，因为这里无法判断是A中的a还是B中的a
+	c.A.a = 1
+	c.b = 2
+
+	d := new(D)
+	d.a = 1		//没问题，因为D中本身就有一个a
+}
+
+```
+所以：  
+1、外层的名字会覆盖内层的名字，这就提供了一种重载字段或者方法的方式  
+2、当同一名字在同一级别出现多次，如果使用该名字则必须明确表示需要具体结构体中的名字
