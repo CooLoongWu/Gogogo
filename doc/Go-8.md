@@ -71,3 +71,43 @@ func main() {
 	person3.SayGo("NoThing")
 }
 ```
+
+## 嵌套接口
+嵌套接口就是在一个接口中包含了另一个接口，这相当于直接将这些内嵌接口的方法列举在外层接口中一样。
+```go
+package main
+
+import "fmt"
+
+type Whisper interface {
+	Say()
+}
+
+//定义接口
+type Sayer interface {
+	SayHello()
+	Whisper
+}
+
+//定义结构体
+type Person struct {
+	name string
+}
+
+//实现接口的SayHello()
+func (person *Person) SayHello() {
+	fmt.Println("Hello " + person.name)
+}
+
+func (person *Person) Say() {
+	fmt.Println("来自Whisper接口中的Say")
+}
+
+func main() {
+	person := new(Person)
+	person.name = "LiLei"
+	person.SayHello()
+	person.Say()
+}
+
+```
