@@ -111,3 +111,57 @@ func main() {
 }
 
 ```
+
+## 类型断言
+一个接口类型的变量中可以包含任何类型的值，所以我们需要来的检测他的类型，通常我们可以使用类型断言来测试在某个时候接口变量的值。  
+类型断言可能是无效的，因为他不可能预见所有的可能性。如果转换在程序运行时失败会导致错误发生。
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+//定义接口
+type Sayer interface {
+	SayHello()
+}
+
+//定义结构体Person
+type Person struct {
+	name string
+}
+
+//定义结构体People
+type People struct {
+	name string
+}
+
+func (person *Person) SayHello() {
+	fmt.Println("Hello Person")
+}
+
+func (people *People) SayHello() {
+	fmt.Println("Hello People")
+}
+
+func main() {
+	var say Sayer 
+
+	person := new(Person)
+
+	say = person
+	if _, ok := say.(*Person); ok {//say必须是接口变量，忘记“*”将会导致编译错误
+		fmt.Println("Yes")
+	} else {
+		fmt.Println("No")
+	}
+
+	if _, ok := say.(*People); ok {
+		fmt.Println("Yes")
+	} else {
+		fmt.Println("No")
+	}
+}
+```
