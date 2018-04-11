@@ -14,34 +14,16 @@ type Person struct {
 	name string
 }
 
-//定义结构体People
-type People struct {
-	name string
-}
-
 func (person *Person) SayHello() {
 	fmt.Println("Hello Person")
 }
 
-func (people *People) SayHello() {
-	fmt.Println("Hello People")
-}
-
 func main() {
 	var say Sayer
+	say = new(Person)
 
-	person := new(Person)
-
-	say = person
-	if _, ok := say.(*Person); ok {
+	//测试某一个值是否实现了某个接口，此处没有“*”
+	if _, ok := say.(Sayer); ok {
 		fmt.Println("Yes")
-	} else {
-		fmt.Println("No")
-	}
-
-	if _, ok := say.(*People); ok {
-		fmt.Println("Yes")
-	} else {
-		fmt.Println("No")
 	}
 }
