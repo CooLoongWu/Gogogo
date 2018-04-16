@@ -6,27 +6,21 @@ import (
 )
 
 type Person struct {
-	name string
-	age  int
-}
-
-type Card struct {
-	id     int
-	Person []*Person
+	Name string           //注意这里结构体变量需要 大写！！
+	Age  int `json:"age"` //如果需要自定义json中的字段名可以在结构体变量后添加`json:"age"`类似的声明
 }
 
 func main() {
-	p1 := &Person{"李明", 8}
-	p2 := &Person{"李雷", 9}
+	//序列化
+	p := Person{
+		Name: "LiMing", //赋值的时候也需要将结构体变量名称写出来
+		Age:  8,
+	}
+	js, _ := json.Marshal(p) //使用json.Marshal()函数来序列化结构体实例
+	fmt.Printf("%s\n", js)
 
-	card := Card{0, []*Person{p1, p2}}
-	js1, _ := json.Marshal(p1)
-	js2, _ := json.Marshal(p2)
-
-	js3, _ := json.Marshal(card)
-
-	fmt.Printf("%s\n", js1)
-	fmt.Printf("%s\n", js2)
-	fmt.Printf("%s\n", js3)
-
+	//反序列化
+	var person Person
+	json.Unmarshal(js, &person) //注意第二个参数需要取得对象的地址
+	fmt.Printf("%+v", person)
 }
