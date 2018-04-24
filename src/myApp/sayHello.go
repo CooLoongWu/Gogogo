@@ -1,24 +1,25 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
+
+func sum(values [] int, resultChan chan int) {
+	sum := 0
+	for _, value := range values {
+		sum += value
+	}
+	resultChan <- sum
+}
 
 func main() {
-	num := make(chan int, 2)
+	values := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
+	resultChan := make(chan int, 2)
 
-	fmt.Println(num)
-	num <- 1
+	go sum(values[:len(values)/2], resultChan)
+	go sum(values[len(values)/2:], resultChan)
 
-	var value int
-	value, _ = <-num
-	fmt.Println(value)
+	sum1, sum2 := <-resultChan, <-resultChan
+	close(resultChan)
 
-	num <- 2
-	value, _ = <-num
-	fmt.Println(value)
-
-	num <- 3
-	value, _ = <-num
-	fmt.Println(value)
+	fmt.Println("第一组计算结果：", sum1, "；第二组计算结果：", sum2)
+	fmt.Println("计算结果:", sum1+sum2)
 }
