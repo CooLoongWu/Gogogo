@@ -2,24 +2,21 @@ package main
 
 import "fmt"
 
-func sum(values [] int, resultChan chan int) {
-	sum := 0
-	for _, value := range values {
-		sum += value
-	}
-	resultChan <- sum
-}
-
 func main() {
-	values := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
-	resultChan := make(chan int, 2)
+	m := make(map[string]string)
+	m["str"] = "string"
+	m["int"] = "int"
 
-	go sum(values[:len(values)/2], resultChan)
-	go sum(values[len(values)/2:], resultChan)
+	fmt.Println("结果:", m["int"])
+	fmt.Println("结果:", m["float"])
 
-	sum1, sum2 := <-resultChan, <-resultChan
-	close(resultChan)
+	delete(m, "int")
+	fmt.Println("结果:", m["int"])
 
-	fmt.Println("第一组计算结果：", sum1, "；第二组计算结果：", sum2)
-	fmt.Println("计算结果:", sum1+sum2)
+	var m1 map[string]int
+	m1 = nil
+	fmt.Println("结果：", m1["str"])
+	m1["str"] = 1 //值为nil的map，相当于只读的map，这句写入操作会引发panic
+	fmt.Println("结果：", m1["str"])
+	delete(m1, "str")
 }
