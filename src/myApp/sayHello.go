@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
 func main() {
 	ch := make(chan int, 1)
@@ -12,4 +15,6 @@ func main() {
 
 	i := <-ch
 	fmt.Println(i)
+
+	fmt.Println(runtime.NumCPU())
 }
