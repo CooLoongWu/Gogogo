@@ -1,20 +1,19 @@
 package main
 
 import (
-	"fmt"
-	"runtime"
+	"net/http"
+	"io"
+	"os"
 )
 
 func main() {
-	ch := make(chan int, 1)
-
-	select {
-	case ch <- 1:
-	case ch <- 2:
+	resp, err := http.Get("https://baidu.com")
+	if err != nil {
+		return
 	}
+	defer resp.Body.Close()
 
-	i := <-ch
-	fmt.Println(i)
+	io.Copy(os.Stdout, resp.Body)
 
-	fmt.Println(runtime.NumCPU())
+
 }
