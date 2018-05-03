@@ -1,19 +1,21 @@
 package main
 
 import (
-	"net/http"
-	"io"
-	"os"
+	"encoding/json"
+	"fmt"
 )
 
+type T struct {
+	Num int       `json:"num"`
+	Str string    `json:"str"`
+	Sli []string  `json:"sli"`
+	Arr [2]string `json:"arr"`
+	Is  bool      `json:"is"`
+	By  []byte    `json:"by"`
+}
+
 func main() {
-	resp, err := http.Get("https://baidu.com")
-	if err != nil {
-		return
-	}
-	defer resp.Body.Close()
-
-	io.Copy(os.Stdout, resp.Body)
-
-
+	t := T{}
+	js, _ := json.Marshal(t)
+	fmt.Printf("%s", js)
 }
